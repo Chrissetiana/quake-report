@@ -6,18 +6,21 @@
     android:orientation="horizontal">
 
     <TextView
+        android:id="@+id/earthquake_magnitude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="1.0" />
 
     <TextView
+        android:id="@+id/earthquake_city"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         tools:text="Name of City" />
 
     <TextView
+        android:id="@+id/earthquake_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
