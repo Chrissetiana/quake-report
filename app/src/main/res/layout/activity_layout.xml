@@ -3,26 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/earthquake_magnitude"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         tools:text="1.0" />
 
     <TextView
-        android:id="@+id/earthquake_city"
+        android:id="@+id/earthquake_location"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
-        tools:text="Name of City" />
+        tools:text="City of Angels" />
 
     <TextView
         android:id="@+id/earthquake_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_weight="1"
         tools:text="@tools:sample/date/mmddyy" />
 
