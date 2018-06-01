@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- Colors for earthquakes with varying magnitudes -->
     <color name="magnitude1">#4A7BA7</color>
     <color name="magnitude2">#04B4B3</color>
     <color name="magnitude3">#10CAC9</color>
@@ -14,4 +15,9 @@
     <color name="magnitude8">#E13A20</color>
     <color name="magnitude9">#D93218</color>
     <color name="magnitude10">#C03823</color>
+
+    <!-- Text color for the details of the earthquake in the list item -->
+    <color name="textColorEarthquakeDetails">#B4BAC0</color>
+    <!-- Text color for the primary location of the earthquake in the list item -->
+    <color name="textColorEarthquakeLocation">#2B3D4D</color>
 </resources>
