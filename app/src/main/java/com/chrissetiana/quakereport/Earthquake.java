@@ -2,17 +2,17 @@ package com.chrissetiana.quakereport;
 
 public class Earthquake {
 
-    private String magnitude;
+    private double magnitude;
     private String location;
     private long time;
 
-    public Earthquake(String mag, String loc, long millisec) {
+    public Earthquake(double mag, String loc, long millisec) {
         magnitude = mag;
         location = loc;
         time = millisec;
     }
 
-    public String getMagnitude() {
+    public double getMagnitude() {
         return magnitude;
     }
 

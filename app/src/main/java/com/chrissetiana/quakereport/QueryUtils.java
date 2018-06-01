@@ -6,9 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public final class QueryUtils {
 
@@ -45,15 +43,9 @@ public final class QueryUtils {
                 JSONObject properties = currentEarthquake.getJSONObject("properties");
 
                 // Extract "mag" for magnitude, "place" for location, "time" for time
-                String magnitude = properties.getString("mag");
+                double magnitude = properties.getDouble("mag");
                 String location = properties.getString("place");
                 long time = properties.getLong("time");
-
-                // Format the date
-                Date newDate = new Date(time);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-                String formattedDate = dateFormat.format(newDate);
 
                 // Create Earthquake java object from magnitude, location, and time
                 Earthquake earthquake = new Earthquake(magnitude, location, time);
@@ -66,5 +58,4 @@ public final class QueryUtils {
         }
         return earthquakes;
     }
-
 }
