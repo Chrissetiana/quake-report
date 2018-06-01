@@ -15,6 +15,8 @@ import java.util.Date;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
+    private final static String SEPARATOR = " of ";
+
     public EarthquakeAdapter(Activity context, ArrayList<Earthquake> earthquakes) {
         super(context, 0, earthquakes);
     }
@@ -22,6 +24,9 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
+        String loc_offset, loc_primary;
+
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.activity_layout, parent, false);
@@ -32,8 +37,21 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         TextView magnitude = listItemView.findViewById(R.id.earthquake_magnitude);
         magnitude.setText(current.getMagnitude());
 
-        TextView city = listItemView.findViewById(R.id.earthquake_location);
-        city.setText(current.getLocation());
+        String location = current.getLocation();
+        if (location.contains(SEPARATOR)) {
+            String[] loc = location.split(SEPARATOR);
+            loc_offset = loc[0] + SEPARATOR;
+            loc_primary = loc[1];
+        } else {
+            loc_offset = "Near the";
+            loc_primary = location;
+        }
+
+        TextView location_offset = listItemView.findViewById(R.id.earthquake_loc_offset);
+        location_offset.setText(loc_offset);
+
+        TextView location_primary = listItemView.findViewById(R.id.earthquake_loc_primary);
+        location_primary.setText(loc_primary);
 
         Date dateTime = new Date(current.getTime());
 
@@ -53,6 +71,6 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     }
 
     private String formatTime(Date time) {
-        return new SimpleDateFormat("HH:mm:ss").format(time);
+        return new SimpleDateFormat("hh:mm a").format(time);
     }
 }

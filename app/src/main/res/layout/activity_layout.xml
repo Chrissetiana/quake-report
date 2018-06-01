@@ -12,18 +12,34 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         tools:text="1.0" />
 
-    <TextView
-        android:id="@+id/earthquake_location"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
-        tools:text="City of Angels" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/earthquake_loc_offset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="30 km S of" />
+
+        <TextView
+            android:id="@+id/earthquake_loc_primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="City of Angels" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -44,7 +60,7 @@
             android:id="@+id/earthquake_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="04:30:17" />
+            tools:text="04:30 PM" />
 
     </LinearLayout>
 
