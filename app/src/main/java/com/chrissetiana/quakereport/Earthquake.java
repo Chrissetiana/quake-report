@@ -34,17 +34,4 @@ public class Earthquake {
         return url;
     }
 
-    private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Earthquake>> {
-        @Override
-        protected List<Earthquake> doInBackground(String... urls) {
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(List<Earthquake> data) {
-            super.onPostExecute(data);
-        }
-
-
-    }
 }
