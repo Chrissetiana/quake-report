@@ -1,9 +1,5 @@
 package com.chrissetiana.quakereport;
 
-import android.os.AsyncTask;
-
-import java.util.List;
-
 public class Earthquake {
 
     private double magnitude;
