@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     private static final int LOADER_ID = 1;
-    private EarthquakeAdapter adapter;
     TextView emptyList;
+    private EarthquakeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +58,17 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+
+        emptyList.setText(R.string.empty_list);
+
+        View progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.GONE);
+
         adapter.clear();
 
         if (earthquakes != null && !earthquakes.isEmpty()) {
-           adapter.addAll(earthquakes);
+            adapter.addAll(earthquakes);
         }
-
-        emptyList.setText(R.string.empty_list);
     }
 
     @Override
