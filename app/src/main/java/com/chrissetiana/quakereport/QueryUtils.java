@@ -24,13 +24,6 @@ public final class QueryUtils {
 
     public static List<Earthquake> fetchEarthquakeData(String requestUrl) {
 
-        // TEST: this is to force the thread to sleep for two seconds
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         URL url = createUrl(requestUrl);
 
         String jsonResponse = null;

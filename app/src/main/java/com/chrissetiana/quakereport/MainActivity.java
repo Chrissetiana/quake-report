@@ -2,8 +2,11 @@ package com.chrissetiana.quakereport;
 
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +22,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     private static final int LOADER_ID = 1;
-    TextView emptyList;
+    TextView emptyText = findViewById(R.id.empty_list);
+    View progressBar = findViewById(R.id.progress_bar);
     private EarthquakeAdapter adapter;
 
     @Override
@@ -44,11 +48,21 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             }
         });
 
-        emptyList = findViewById(R.id.empty_list);
-        earthquakeList.setEmptyView(emptyList);
+        earthquakeList.setEmptyView(emptyText);
 
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(LOADER_ID, null, this);
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            loaderManager = getLoaderManager();
+            loaderManager.initLoader(LOADER_ID, null, this);
+        } else {
+            progressBar.setVisibility(View.GONE);
+            emptyText.setText(R.string.no_conn);
+        }
     }
 
     @Override
@@ -59,11 +73,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
 
-        emptyList.setText(R.string.empty_list);
-
-        View progressBar = findViewById(R.id.progress_bar);
+        emptyText.setText(R.string.no_result);
         progressBar.setVisibility(View.GONE);
-
         adapter.clear();
 
         if (earthquakes != null && !earthquakes.isEmpty()) {
