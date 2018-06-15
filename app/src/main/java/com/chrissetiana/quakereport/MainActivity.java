@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     private static final int LOADER_ID = 1;
     private EarthquakeAdapter adapter;
+    TextView emptyList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             }
         });
 
+        emptyList = findViewById(R.id.empty_list);
+        earthquakeList.setEmptyView(emptyList);
+
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(LOADER_ID, null, this);
     }
@@ -56,8 +61,10 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
         adapter.clear();
 
         if (earthquakes != null && !earthquakes.isEmpty()) {
-            adapter.addAll(earthquakes);
+           adapter.addAll(earthquakes);
         }
+
+        emptyList.setText(R.string.empty_list);
     }
 
     @Override
