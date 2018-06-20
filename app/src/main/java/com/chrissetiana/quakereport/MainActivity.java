@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
     private static final int LOADER_ID = 1;
-    TextView emptyText = findViewById(R.id.empty_list);
-    View progressBar = findViewById(R.id.progress_bar);
+    TextView emptyText;
+    View progressBar;
     private EarthquakeAdapter adapter;
 
     @Override
@@ -48,16 +48,15 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
             }
         });
 
+        progressBar = findViewById(R.id.progress_bar);
+        emptyText = findViewById(R.id.empty_list);
         earthquakeList.setEmptyView(emptyText);
 
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(LOADER_ID, null, this);
-
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
-            loaderManager = getLoaderManager();
+        if (netInfo != null && netInfo.isConnected()) {
+            LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(LOADER_ID, null, this);
         } else {
             progressBar.setVisibility(View.GONE);
@@ -72,9 +71,8 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
-
-        emptyText.setText(R.string.no_result);
         progressBar.setVisibility(View.GONE);
+        emptyText.setText(R.string.no_result);
         adapter.clear();
 
         if (earthquakes != null && !earthquakes.isEmpty()) {
