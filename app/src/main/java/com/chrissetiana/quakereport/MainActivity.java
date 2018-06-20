@@ -5,10 +5,12 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +24,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderCallbacks<List<Earthquake>> {
 
-    private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
+    // private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=5&limit=10";
+    private static final String REQUEST_URL = "https://earthquake.usgs.gov/fdsnws/event/1/query";
     private static final int LOADER_ID = 1;
     TextView emptyText;
     View progressBar;
@@ -68,7 +71,19 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
 
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
-        return new EarthquakeLoader(this, REQUEST_URL);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String minMag = sharedPref.getString(
+                getString(R.string.settings_min_magnitude_key),
+                getString(R.string.settings_min_magnitude_default));
+        Uri uri = Uri.parse(REQUEST_URL);
+        Uri.Builder builder = uri.buildUpon();
+
+        builder.appendQueryParameter("format", "geojson");
+        builder.appendQueryParameter("limit", "10");
+        builder.appendQueryParameter("minmag", minMag);
+        builder.appendQueryParameter("orderby", "time");
+
+        return new EarthquakeLoader(this, builder.toString());
     }
 
     @Override
