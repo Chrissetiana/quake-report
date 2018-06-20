@@ -72,16 +72,23 @@ public class MainActivity extends AppCompatActivity implements LoaderCallbacks<L
     @Override
     public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
         String minMag = sharedPref.getString(
                 getString(R.string.settings_min_magnitude_key),
                 getString(R.string.settings_min_magnitude_default));
+
+        String orderBy = sharedPref.getString(
+                getString(R.string.settings_order_by_key),
+                getString(R.string.settings_order_by_default)
+        );
+
         Uri uri = Uri.parse(REQUEST_URL);
         Uri.Builder builder = uri.buildUpon();
 
         builder.appendQueryParameter("format", "geojson");
         builder.appendQueryParameter("limit", "10");
         builder.appendQueryParameter("minmag", minMag);
-        builder.appendQueryParameter("orderby", "time");
+        builder.appendQueryParameter("orderby", orderBy);
 
         return new EarthquakeLoader(this, builder.toString());
     }
